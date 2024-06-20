@@ -3,6 +3,7 @@
 /* TODO: I kept color token names consistent as in figma but:
   1. Figma has inconsistent color naming
   2. I'd argue we should use semantic color naming (primary, secondary, danger, warning, etc.) 
+  --primitives--hover--purple: #5c33e7;
 */
 
 module.exports = {
@@ -11,6 +12,21 @@ module.exports = {
   ],
     theme: {
       extend: {
+        fontFamily: {
+          roboto: ['Roboto', 'sans-serif'],
+        },
+        fontSize: {
+          headlineLarge: '30px',
+          headlineMedium: '18px',
+          body: '14px',
+          subtitle: '13px',
+          subtitleMedium: '13px',
+          subtitleSmall: '11px',
+        },
+        fontWeight: {
+          normal: 400,
+          medium: 500,
+        },
         colors: {
           grey: {
             92: '#E0E0E1',  
