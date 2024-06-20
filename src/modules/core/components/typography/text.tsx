@@ -16,7 +16,10 @@ enum TextElementType {
 enum TextColor {
   White = 'text-white',
   Yellow1 = 'text-yellow-1',
+  Yellow2 = 'text-yellow-2',
   Grey50 = 'text-grey-50',
+  Grey92 = 'text-grey-92',
+  LightPurple = 'text-light-purple',
 }
 
 type TextProps = {
@@ -29,7 +32,7 @@ const baseClass = 'font-roboto';
 
 const textStyleClasses: Record<TextStyle, string> = {
   [TextStyle.BodyText]: `${baseClass} text-body font-normal`,
-  [TextStyle.Subtitle]: `${baseClass} text-subtitle font-normal pb-2.5`,
+  [TextStyle.Subtitle]: `${baseClass} text-subtitle font-normal`,
   [TextStyle.SubtitleMedium]: `${baseClass} text-subtitleMedium font-medium`,
   [TextStyle.SubtitleSmall]: `${baseClass} text-subtitleSmall font-medium`,
 };
