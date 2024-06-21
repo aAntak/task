@@ -20,6 +20,7 @@ const EventsCalendarPage = () => {
     selectedEvent,
     isEventDetailsModalOpen,
     isScheduleOpen,
+    isInitializing,
     onEventDetailsOpen,
     onEventDetailsClose,
     onEventJoin,
@@ -43,6 +44,7 @@ const EventsCalendarPage = () => {
           todaysEvents={todaysEvents}
           tommorowsEvents={tommorowsEvents}
           onEventDetailsOpen={onEventDetailsOpen}
+          isInitializing={isInitializing}
         />
       </PageLayoutAside>
       <PageLayoutMain>

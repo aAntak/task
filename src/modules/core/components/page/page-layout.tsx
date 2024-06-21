@@ -16,7 +16,9 @@ const PageLayout = ({
   return (
     <div className="bg-black-12 h-full flex flex-col">
       {header}
-      <div className="flex flex-row grow relative">{children}</div>
+      <div className="flex flex-row grow relative overflow-hidden">
+        {children}
+      </div>
     </div>
   );
 };
@@ -35,7 +37,7 @@ const PageLayoutAside = ({
       leaveFrom="translate-x-0"
       leaveTo="-translate-x-full"
     >
-      <div className="absolute inset-0 flex flex-1 px-2 pt-6 border-r border-black-18 md:max-w-[472px] md:static md:px-6">
+      <div className="absolute inset-0 flex flex-1 border-r border-black-18 md:max-w-[472px] md:static md:pt-6 md:px-6 overflow-auto">
         {children}
       </div>
     </Transition>

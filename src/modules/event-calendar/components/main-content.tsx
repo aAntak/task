@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Headline, HeadlineLevel, Text, TextStyle } from '../../core';
 
 const MainContent = memo(() => (
-  <div className="flex justify-center grow bg-black-15 rounded-t-md px-6">
+  <div className="flex justify-center grow bg-black-15 rounded-t-md px-6 overflow-auto">
     <div className="flex flex-col gap-6 w-full max-w-[602px] mt-[72px]">
       <Headline as={HeadlineLevel.h1}>
         The standard Lorem Ipsum passage, used since the 1500s
