@@ -1,5 +1,10 @@
+import {
+  Headline,
+  HeadlineLevel,
+  Text,
+  TextStyle,
+} from 'modules/core/components';
 import { memo } from 'react';
-import { Headline, HeadlineLevel, Text, TextStyle } from '../../core';
 
 const MainContent = memo(() => (
   <div className="flex justify-center grow bg-black-15 rounded-t-md px-6 overflow-auto">

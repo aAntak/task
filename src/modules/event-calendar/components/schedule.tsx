@@ -1,5 +1,5 @@
-import { Headline, HeadlineLevel } from '../../core';
-import { getFormattedDate, getTomorrow } from '../../core/utils';
+import { Headline, HeadlineLevel } from 'modules/core/components';
+import { getFormattedDate, getTomorrow } from 'modules/core/utils';
 import { EventStatus, EventViewModel } from '../state';
 import { EventList } from './event-list';
 

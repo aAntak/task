@@ -5,5 +5,4 @@ https://mockapi.io/projects/66740dcb75872d0e0a94e1c1#
 
 // TODO: 1. Color usage a bit awkward 2. Fix line height
 // 2. 0D0H0M ( FORMAT IN MODAL)
-// 3. Fix mobile
 // 8. button as link, navigate to the open tab

@@ -1,5 +1,10 @@
-import { Button, Header, IconButton, IconButtonSize } from '../../core';
-import { convertToHourFormat } from '../../core/utils';
+import {
+  Button,
+  Header,
+  IconButton,
+  IconButtonSize,
+} from 'modules/core/components';
+import { convertToHourFormat } from 'modules/core/utils';
 import { EventViewModel } from '../state';
 
 type EventsPageHeaderProps = {

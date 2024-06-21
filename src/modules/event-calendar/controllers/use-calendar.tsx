@@ -10,6 +10,7 @@ import {
 import { EventType } from '../components';
 import { EventStatus, EventViewModel } from '../state';
 import { usePolling } from '../../core/utils';
+import { ScreenSize, getMediaQuery } from '../../core/theme';
 
 const getStatus = (startDate: Date, endDate: Date, state?: ReviewState) => {
   const now = new Date();
@@ -78,11 +79,14 @@ const mapEvents = (events: Event[], reviews: Review[]): EventViewModel[] => {
   return sortedEvents;
 };
 
+// TODO: set as 5 mins
 const pollingIntervalInMs = 3000000;
 
 const useCalendarController = () => {
   const [isInitializing, setIsInitializing] = useState(true);
-  const [isScheduleOpen, setIsScheduleOpen] = useState(true);
+  const [isScheduleOpen, setIsScheduleOpen] = useState(
+    window.matchMedia(getMediaQuery(ScreenSize.md)).matches
+  );
   const [events, setEvents] = useState<EventViewModel[]>([]);
   const [selectedEventId, setSelectedEventId] = useState<string | undefined>(
     undefined

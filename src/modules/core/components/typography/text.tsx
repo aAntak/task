@@ -1,3 +1,4 @@
+import { Color } from '../../../core/theme';
 import { PropsWithChildren } from 'react';
 
 enum TextStyle {
@@ -12,41 +13,46 @@ enum TextElementType {
   'span' = 'span',
 }
 
-// TODO: Ideally should support all colors from the theme. This should not live here as well.
-enum TextColor {
-  White = 'text-white',
-  Yellow1 = 'text-yellow-1',
-  Yellow2 = 'text-yellow-2',
-  Grey50 = 'text-grey-50',
-  Grey92 = 'text-grey-92',
-  LightPurple = 'text-light-purple',
-  Red = 'text-red',
-}
-
 type TextProps = {
   textStyle?: TextStyle;
   as?: TextElementType;
-  color?: TextColor;
+  color?: Color;
 };
 
-const baseClass = 'font-roboto';
+const textStyleVariants: Record<TextStyle, string> = {
+  [TextStyle.BodyText]: `text-body font-normal`,
+  [TextStyle.Subtitle]: `text-subtitle font-normal`,
+  [TextStyle.SubtitleMedium]: `text-subtitleMedium font-medium`,
+  [TextStyle.SubtitleSmall]: `text-subtitleSmall font-medium`,
+};
 
-const textStyleClasses: Record<TextStyle, string> = {
-  [TextStyle.BodyText]: `${baseClass} text-body font-normal`,
-  [TextStyle.Subtitle]: `${baseClass} text-subtitle font-normal`,
-  [TextStyle.SubtitleMedium]: `${baseClass} text-subtitleMedium font-medium`,
-  [TextStyle.SubtitleSmall]: `${baseClass} text-subtitleSmall font-medium`,
+const textColorVariants: Record<Color, string> = {
+  [Color.White]: 'text-white',
+  [Color.Yellow1]: 'text-yellow-1',
+  [Color.Yellow2]: 'text-yellow-2',
+  [Color.Grey50]: 'text-grey-50',
+  [Color.Grey92]: 'text-grey-92',
+  [Color.Purple]: 'text-purple',
+  [Color.LightPurple]: 'text-light-purple',
+  [Color.Red]: 'text-red',
+  [Color.Black26]: 'text-black-26',
+  [Color.Black22]: 'text-black-22',
+  [Color.Black18]: 'text-black-18',
+  [Color.Black15]: 'text-black-15',
+  [Color.Black12]: 'text-black-12',
 };
 
 const Text = ({
   textStyle = TextStyle.BodyText,
   as: Component = TextElementType.p,
-  color = TextColor.White,
+  color = Color.White,
   children,
 }: PropsWithChildren<TextProps>) => (
-  <Component className={`${textStyleClasses[textStyle]} ${color}`}>
+  <Component
+    className={`font-roboto ${textStyleVariants[textStyle]} ${textColorVariants[color]}`}
+  >
     {children}
   </Component>
 );
 
-export { Text, TextStyle, TextElementType, TextColor };
+export { Text, TextStyle, TextElementType };

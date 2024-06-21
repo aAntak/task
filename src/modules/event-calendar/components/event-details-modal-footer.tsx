@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Text, TextStyle, TextColor, Button } from '../../core';
-import { getCountdownTime, getIsCurrentTimeBetween } from '../../core/utils';
+import { Text, TextStyle, Button } from 'modules/core/components';
+import { getCountdownTime, getIsCurrentTimeBetween } from 'modules/core/utils';
+import { Color } from 'modules/core/theme';
 
 type EventDetailsModalFooterProps = {
   start: Date;
@@ -58,7 +59,7 @@ const EventDetailsModalFooter = ({
     <div>
       <Text
         textStyle={TextStyle.Subtitle}
-        color={isEventActive ? TextColor.Yellow1 : TextColor.Grey50}
+        color={isEventActive ? Color.Yellow1 : Color.Grey50}
       >
         {formattedStartTime}
       </Text>

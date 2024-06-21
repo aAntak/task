@@ -1,9 +1,5 @@
-import {
-  Text,
-  TextColor,
-  TextElementType,
-  TextStyle,
-} from '../../core/components';
+import { Color } from 'modules/core/theme';
+import { Text, TextElementType, TextStyle } from '../../core/components';
 import { convertToHourFormat } from '../../core/utils';
 import { EventStatus, EventType } from '../state';
 
@@ -17,10 +13,10 @@ type EventProps = {
   status: EventStatus;
 };
 
-const eventTypeColorMap: Record<EventType, TextColor> = {
-  [EventType.Correction]: TextColor.LightPurple,
-  [EventType.Meeting]: TextColor.Yellow2,
-  [EventType.Session]: TextColor.Grey50,
+const eventTypeColorMap: Record<EventType, Color> = {
+  [EventType.Correction]: Color.LightPurple,
+  [EventType.Meeting]: Color.Yellow2,
+  [EventType.Session]: Color.Grey50,
 };
 
 const Event = ({
@@ -52,7 +48,7 @@ const Event = ({
         <Text
           as={TextElementType.span}
           textStyle={TextStyle.BodyText}
-          color={TextColor.Grey92}
+          color={Color.Grey92}
         >
           {title}
         </Text>
@@ -68,7 +64,7 @@ const Event = ({
         <Text
           as={TextElementType.span}
           textStyle={TextStyle.Subtitle}
-          color={TextColor.Red}
+          color={Color.Red}
         >
           Overdue
         </Text>
@@ -78,7 +74,7 @@ const Event = ({
             <Text
               as={TextElementType.span}
               textStyle={TextStyle.Subtitle}
-              color={TextColor.Yellow1}
+              color={Color.Yellow1}
             >
               Live
             </Text>
@@ -87,14 +83,14 @@ const Event = ({
             <Text
               as={TextElementType.span}
               textStyle={TextStyle.Subtitle}
-              color={isPastEvent ? TextColor.Grey50 : TextColor.Grey92}
+              color={isPastEvent ? Color.Grey50 : Color.Grey92}
             >
               {convertToHourFormat(start)}
             </Text>
             <Text
               as={TextElementType.span}
               textStyle={TextStyle.Subtitle}
-              color={isLive ? TextColor.Grey92 : TextColor.Grey50}
+              color={isLive ? Color.Grey92 : Color.Grey50}
             >
               {convertToHourFormat(end)}
             </Text>

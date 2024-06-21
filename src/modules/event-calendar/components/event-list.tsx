@@ -1,6 +1,7 @@
-import { TextStyle, Text, TextColor } from '../../core';
+import { TextStyle, Text } from 'modules/core/components';
 import { Event } from './event';
 import { EventViewModel } from '../state';
+import { Color } from 'modules/core/theme';
 
 type EventListProps = {
   title: string;
@@ -16,7 +17,7 @@ const EventList = ({
   onEventSelect,
 }: EventListProps) => (
   <div className="flex flex-col w-full">
-    <Text textStyle={TextStyle.SubtitleMedium} color={TextColor.Grey50}>
+    <Text textStyle={TextStyle.SubtitleMedium} color={Color.Grey50}>
       {title}
     </Text>
     {!events.length ? (

@@ -1,11 +1,11 @@
+import { Color } from 'modules/core/theme';
 import {
   Headline,
   HeadlineLevel,
   Modal,
-  TextColor,
   TextStyle,
   Text,
-} from '../../core';
+} from 'modules/core/components';
 import { EventDetailsModalFooter } from './event-details-modal-footer';
 
 type EventDetailsModalProps = {
@@ -75,7 +75,7 @@ const EventDetailsModal = ({
       <div className="flex gap-y-10 flex-col">
         <div>
           <Headline as={HeadlineLevel.h2}>{title}</Headline>
-          <Text textStyle={TextStyle.BodyText} color={TextColor.Grey50}>
+          <Text textStyle={TextStyle.BodyText} color={Color.Grey50}>
             {getFormattedDateAndTime(start, end)}
           </Text>
         </div>
