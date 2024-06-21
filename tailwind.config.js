@@ -20,12 +20,30 @@ module.exports = {
           roboto: ['Roboto', 'sans-serif'],
         },
         fontSize: {
-          headlineLarge: '30px',
-          headlineMedium: '18px',
-          body: '14px',
-          subtitle: '13px',
-          subtitleMedium: '13px',
-          subtitleSmall: '11px',
+          "headline-large": ['1.875rem', {
+            lineHeight: '1.25',
+            fontWeight: '500',
+          }],
+          "headline-medium": ['1.125rem', {
+            lineHeight: '1.25',
+            fontWeight: '500',
+          }],
+          "body": ['0.875rem', {
+            lineHeight: '1.5',
+            fontWeight: '400',
+          }],
+          "subtitle": ['0.8125rem', {
+            lineHeight: '1.25',
+            fontWeight: '400',
+          }],
+          "subtitle-medium": ['0.8125rem', {
+            lineHeight: '1.5',
+            fontWeight: '500',
+          }],
+          "subtitle-small": ['0.6875rem', {
+            lineHeight: '1.5',
+            fontWeight: '500',
+          }],
         },
         fontWeight: {
           normal: 400,

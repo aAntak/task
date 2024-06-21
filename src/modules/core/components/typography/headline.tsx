@@ -9,18 +9,20 @@ type HeadlineProps = {
   as?: HeadlineLevel;
 };
 
-const baseClass = 'font-roboto text-grey-92';
-
 const headlineStyleClasses: Record<HeadlineLevel, string> = {
-  [HeadlineLevel.h1]: `${baseClass} text-headlineLarge font-medium`,
-  [HeadlineLevel.h2]: `${baseClass} text-headlineMedium font-medium pb-1`,
+  [HeadlineLevel.h1]: `text-headline-large`,
+  [HeadlineLevel.h2]: `text-headline-medium pb-1`,
 };
 
 const Headline = ({
   as: Component = HeadlineLevel.h1,
   children,
 }: PropsWithChildren<HeadlineProps>) => (
-  <Component className={headlineStyleClasses[Component]}>{children}</Component>
+  <Component
+    className={`font-roboto text-grey-92 ${headlineStyleClasses[Component]}`}
+  >
+    {children}
+  </Component>
 );
 
 export { Headline, HeadlineLevel };

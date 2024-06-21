@@ -20,10 +20,10 @@ type TextProps = {
 };
 
 const textStyleVariants: Record<TextStyle, string> = {
-  [TextStyle.BodyText]: `text-body font-normal`,
-  [TextStyle.Subtitle]: `text-subtitle font-normal`,
-  [TextStyle.SubtitleMedium]: `text-subtitleMedium font-medium`,
-  [TextStyle.SubtitleSmall]: `text-subtitleSmall font-medium`,
+  [TextStyle.BodyText]: `text-body`,
+  [TextStyle.Subtitle]: `text-subtitle`,
+  [TextStyle.SubtitleMedium]: `text-subtitle-medium`,
+  [TextStyle.SubtitleSmall]: `text-subtitle-small`,
 };
 
 const textColorVariants: Record<Color, string> = {
