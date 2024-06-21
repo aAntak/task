@@ -82,7 +82,7 @@ const mapEvents = (events: Event[], reviews: Review[]): EventViewModel[] => {
 // TODO: set as 5 mins
 const pollingIntervalInMs = 3000000;
 
-const useCalendarController = () => {
+const useEventsPageController = () => {
   const [isInitializing, setIsInitializing] = useState(true);
   const [isScheduleOpen, setIsScheduleOpen] = useState(
     window.matchMedia(getMediaQuery(ScreenSize.md)).matches
@@ -96,7 +96,11 @@ const useCalendarController = () => {
 
   const todaysEvents = useMemo(
     () =>
-      events.filter(({ start }) => start.getDate() === new Date().getDate()),
+      events.filter(
+        ({ start, status }) =>
+          start.getDate() === new Date().getDate() &&
+          status !== EventStatus.Overdue
+      ),
     [events]
   );
 
@@ -167,4 +171,4 @@ const useCalendarController = () => {
   };
 };
 
-export { useCalendarController };
+export { useEventsPageController };

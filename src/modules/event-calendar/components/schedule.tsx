@@ -1,5 +1,5 @@
 import { Headline, HeadlineLevel } from 'modules/core/components';
-import { getFormattedDate, getTomorrow } from 'modules/core/utils';
+import { getShortDate, getTomorrow } from 'modules/core/utils';
 import { EventStatus, EventViewModel } from '../state';
 import { EventList } from './event-list';
 
@@ -33,16 +33,16 @@ const Schedule = ({
         />
       )}
       <EventList
-        title={getFormattedDate(new Date())}
+        title={getShortDate(new Date())}
         events={todaysEvents}
         onEventSelect={onEventDetailsOpen}
         emptyListText="No events for today. 🎉"
       />
       <EventList
-        title={getFormattedDate(getTomorrow())}
+        title={getShortDate(getTomorrow())}
         events={tommorowsEvents}
         onEventSelect={onEventDetailsOpen}
-        emptyListText="No events for tommorow. 🎉"
+        emptyListText="No events for tomorrow. 🎉"
       />
     </div>
   );

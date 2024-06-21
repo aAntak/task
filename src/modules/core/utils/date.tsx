@@ -1,3 +1,20 @@
+const weekday = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
+const getYesterday = () => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() + -1);
+
+  return yesterday;
+};
+
 const getTomorrow = () => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -5,25 +22,49 @@ const getTomorrow = () => {
   return tomorrow;
 };
 
-const getFormattedDate = (date: Date): string => {
+const getRelativeWeekday = (date: Date): string => {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const yesterday = getYesterday();
+  const tomorrow = getTomorrow();
 
-  const isToday = date.toDateString() === today.toDateString();
+  if (date.toDateString() === today.toDateString()) {
+    return 'Today';
+  } else if (date.toDateString() === tomorrow.toDateString()) {
+    return 'Tomorrow';
+  } else if (date.toDateString() === yesterday.toDateString()) {
+    return 'Yesterday';
+  } else {
+    return weekday[date.getDay()];
+  }
+};
+
+const getShortDate = (date: Date): string => {
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
+  const relativeDescriptor = getRelativeWeekday(date);
 
-  if (isToday) {
-    return `${month}-${day}, Today`;
+  if (relativeDescriptor === 'Today' || relativeDescriptor === 'Tomorrow') {
+    return `${month}-${day}, ${relativeDescriptor}`;
+  } else {
+    return `${month}-${day}`;
   }
+};
 
+const getDateCategory = (date: Date) => {
+  const today = new Date();
+  const yesterday = getYesterday();
   const tomorrow = getTomorrow();
-  const isTomorrow = date.toDateString() === tomorrow.toDateString();
-  if (isTomorrow) {
-    return `${month}-${day}, Tomorrow`;
-  }
 
-  return `${month}-${day}`;
+  if (date.toDateString() === today.toDateString()) {
+    return 'Today';
+  } else if (date.toDateString() === tomorrow.toDateString()) {
+    return 'Tomorrow';
+  } else if (date.toDateString() === yesterday.toDateString()) {
+    return 'Yesterday';
+  } else {
+    return date.toDateString();
+  }
 };
 
 const getCountdownTime = (start: Date) => {
@@ -52,7 +93,8 @@ const getIsCurrentTimeBetween = (start: Date, end: Date) => {
 
 export {
   getCountdownTime,
-  getFormattedDate,
+  getShortDate,
+  getDateCategory,
   getTomorrow,
   getIsCurrentTimeBetween,
   convertToHourFormat,

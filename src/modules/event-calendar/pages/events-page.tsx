@@ -9,9 +9,9 @@ import {
   Schedule,
   EventsPageHeader,
 } from '../components';
-import { useCalendarController } from '../controllers';
+import { useEventsPageController } from '../controllers';
 
-const EventsCalendarPage = () => {
+const EventsPage = () => {
   const {
     todaysEvents,
     tommorowsEvents,
@@ -25,7 +25,7 @@ const EventsCalendarPage = () => {
     onEventDetailsClose,
     onEventJoin,
     onScheduleVisibilityToggle,
-  } = useCalendarController();
+  } = useEventsPageController();
 
   const header = (
     <EventsPageHeader
@@ -62,4 +62,4 @@ const EventsCalendarPage = () => {
   );
 };
 
-export { EventsCalendarPage };
+export { EventsPage };

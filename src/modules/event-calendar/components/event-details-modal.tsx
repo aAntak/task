@@ -7,6 +7,7 @@ import {
   Text,
 } from 'modules/core/components';
 import { EventDetailsModalFooter } from './event-details-modal-footer';
+import { convertToHourFormat, getDateCategory } from 'modules/core/utils';
 
 type EventDetailsModalProps = {
   isOpen: boolean;
@@ -18,50 +19,6 @@ type EventDetailsModalProps = {
   onJoin: () => void;
 };
 
-const getFormattedDateAndTime = (start?: Date, end?: Date): string => {
-  if (!start || !end) return '';
-
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-
-  const startTime = `${start.getHours().toString().padStart(2, '0')}:${start
-    .getMinutes()
-    .toString()
-    .padStart(2, '0')}`;
-  const endTime = `${end.getHours().toString().padStart(2, '0')}:${end
-    .getMinutes()
-    .toString()
-    .padStart(2, '0')}`;
-
-  const isToday = start.toDateString() === today.toDateString();
-  const isTomorrow = start.toDateString() === tomorrow.toDateString();
-
-  let dayPrefix = '';
-  if (isToday) {
-    dayPrefix = 'Today';
-  } else if (isTomorrow) {
-    dayPrefix = 'Tomorrow';
-  } else {
-    const daysOfWeek = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
-    const dayOfWeek = daysOfWeek[start.getDay()];
-    const month = start.toLocaleString('default', { month: 'short' });
-    const day = start.getDate().toString().padStart(2, '0');
-    dayPrefix = `${dayOfWeek}, ${month} ${day}`;
-  }
-
-  return `${dayPrefix} ${startTime}-${endTime}`;
-};
-
 const EventDetailsModal = ({
   isOpen,
   title,
@@ -70,13 +27,16 @@ const EventDetailsModal = ({
   onClose,
   onJoin,
 }: EventDetailsModalProps) => {
+  const formattedStartTime = start && convertToHourFormat(start);
+  const formattedEndTime = end && convertToHourFormat(end);
+  const dateCategory = start && getDateCategory(start);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex gap-y-10 flex-col">
         <div>
           <Headline as={HeadlineLevel.h2}>{title}</Headline>
           <Text textStyle={TextStyle.BodyText} color={Color.Grey50}>
-            {getFormattedDateAndTime(start, end)}
+            {dateCategory} {formattedStartTime}-{formattedEndTime}
           </Text>
         </div>
         {start && end && (
