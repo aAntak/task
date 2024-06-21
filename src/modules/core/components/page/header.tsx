@@ -1,7 +1,17 @@
-type HeaderProps = {};
+import { ReactNode } from 'react';
 
-const Header = () => {
-  return <div className="h-11 shrink-0 border-b border-black-18"></div>;
+type HeaderProps = {
+  leftContent?: ReactNode;
+  rightContent?: ReactNode;
+};
+
+const Header = ({ leftContent, rightContent }: HeaderProps) => {
+  return (
+    <div className="flex items-center justify-between md:justify-end pr-2.5 pl-1 h-14 shrink-0 border-b border-black-18">
+      <div>{leftContent}</div>
+      <div>{rightContent}</div>
+    </div>
+  );
 };
 
 export { Header };

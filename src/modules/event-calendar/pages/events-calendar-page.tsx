@@ -1,13 +1,14 @@
 import {
-  Button,
-  IconButton,
-  IconButtonSize,
   PageLayout,
   PageLayoutAside,
   PageLayoutMain,
 } from '../../core/components';
-import { convertToHourFormat } from '../../core/utils';
-import { EventDetailsModal, MainContent, Schedule } from '../components';
+import {
+  EventDetailsModal,
+  MainContent,
+  Schedule,
+  EventsPageHeader,
+} from '../components';
 import { useCalendarController } from '../controllers';
 
 const EventsCalendarPage = () => {
@@ -26,22 +27,14 @@ const EventsCalendarPage = () => {
   } = useCalendarController();
 
   const header = (
-    <div className="flex items-center justify-between md:justify-end pr-2.5 pl-1 h-14 shrink-0 border-b border-black-18">
-      <div className="md:hidden">
-        <IconButton
-          iconName="schedule"
-          size={IconButtonSize.L}
-          active={isScheduleOpen}
-          onClick={onScheduleVisibilityToggle}
-        />
-      </div>
-      {liveEvent && (
-        <Button disabled={!liveEvent} onClick={onEventJoin}>
-          {liveEvent.summary} at {convertToHourFormat(liveEvent.start)}
-        </Button>
-      )}
-    </div>
+    <EventsPageHeader
+      isScheduleOpen={isScheduleOpen}
+      liveEvent={liveEvent}
+      onScheduleVisibilityToggle={onScheduleVisibilityToggle}
+      onEventJoin={onEventJoin}
+    />
   );
+
   return (
     <PageLayout header={header}>
       <PageLayoutAside isVisible={isScheduleOpen}>
