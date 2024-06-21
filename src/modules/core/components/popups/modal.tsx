@@ -29,7 +29,7 @@ const Modal = ({
         <div className="fixed inset-0 bg-black-18 bg-opacity-70 z-50 flex items-center justify-center">
           <DialogPanel className="w-full max-w-[600px] rounded-md bg-black-12">
             <div className="h-[44px] flex justify-end items-end px-2.5 pt-2.5 pb-2">
-              <IconButton onClick={onClose} />
+              <IconButton iconName="exit" onClick={onClose} />
             </div>
             <div className="px-6 pb-10">{children}</div>
           </DialogPanel>

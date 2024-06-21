@@ -1,7 +1,22 @@
 import { ReactComponent as Exit } from './assets/exit.svg';
+import { ReactComponent as Schedule } from './assets/schedule.svg';
 
 // TODO: This should support more icons
+const iconMap = {
+  exit: Exit,
+  schedule: Schedule,
+};
 
-const Icon = () => <Exit className="color-grey-50" />;
+type IconMapMember = keyof typeof iconMap;
 
-export { Icon };
+type IconProps = {
+  name: IconMapMember;
+};
+
+const Icon = ({ name }: IconProps) => {
+  const IconComponent = iconMap[name];
+  return <IconComponent className="color-grey-50" />;
+};
+
+export { Icon, iconMap };
+export type { IconMapMember };

@@ -8,10 +8,11 @@ enum EventStatus {
   Default = 'Default',
   Live = 'Live',
   Overdue = 'Overdue',
+  Passed = 'Passed',
 }
 
 type EventViewModel = {
-  id: number;
+  id: string;
   summary: string;
   url: string;
   type: EventType;

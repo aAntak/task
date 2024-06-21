@@ -20,6 +20,7 @@ enum TextColor {
   Grey50 = 'text-grey-50',
   Grey92 = 'text-grey-92',
   LightPurple = 'text-light-purple',
+  Red = 'text-red',
 }
 
 type TextProps = {

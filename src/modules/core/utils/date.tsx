@@ -5,7 +5,7 @@ const getTomorrow = () => {
   return tomorrow;
 };
 
-const formatDate = (date: Date): string => {
+const getFormattedDate = (date: Date): string => {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
@@ -26,6 +26,18 @@ const formatDate = (date: Date): string => {
   return `${month}-${day}`;
 };
 
+const getCountdownTime = (start: Date) => {
+  const now = new Date();
+  const diff = start.getTime() - now.getTime();
+  if (diff <= 0) return '';
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+  return `Starts in: ${days}d ${hours}h ${minutes}min`;
+};
+
 const convertToHourFormat = (datetime: Date) => {
   const date = new Date(datetime);
   const hours = String(date.getHours()).padStart(2, '0');
@@ -39,7 +51,8 @@ const getIsCurrentTimeBetween = (start: Date, end: Date) => {
 };
 
 export {
-  formatDate,
+  getCountdownTime,
+  getFormattedDate,
   getTomorrow,
   getIsCurrentTimeBetween,
   convertToHourFormat,

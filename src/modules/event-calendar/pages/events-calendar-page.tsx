@@ -1,56 +1,69 @@
-import { Headline, HeadlineLevel } from '../../core';
-import { formatDate, getTomorrow } from '../../core/utils';
-import { EventDetailsModal, EventList, MainContent } from '../components';
-import { useCalendarController } from '../controllers/use-calendar';
-import { EventStatus } from '../state';
+import {
+  Button,
+  IconButton,
+  IconButtonSize,
+  PageLayout,
+  PageLayoutAside,
+  PageLayoutMain,
+} from '../../core/components';
+import { convertToHourFormat } from '../../core/utils';
+import { EventDetailsModal, MainContent, Schedule } from '../components';
+import { useCalendarController } from '../controllers';
 
 const EventsCalendarPage = () => {
   const {
+    todaysEvents,
+    tommorowsEvents,
+    overdueEvents,
+    liveEvent,
     selectedEvent,
-    getOverdueEvents,
-    getTommorowsEvents,
-    getTodaysEvents,
+    isEventDetailsModalOpen,
+    isScheduleOpen,
     onEventDetailsOpen,
     onEventDetailsClose,
+    onEventJoin,
+    onScheduleVisibilityToggle,
   } = useCalendarController();
 
-  return (
-    <div className="bg-black-12 h-full flex flex-col">
-      <div className="h-11 shrink-0 border-b border-black-18"></div>
-      <div className="flex flex-row grow">
-        <div className="flex px-6 pt-6 border-r border-black-18">
-          <div className="flex flex-col items-center grow gap-4 bg-black-15 w-[430px] rounded-t-md pt-6 px-2">
-            <Headline as={HeadlineLevel.h2}>My schedule</Headline>
-            <EventList
-              title={EventStatus.Overdue}
-              events={getOverdueEvents()}
-              onEventSelect={onEventDetailsOpen}
-            />
-            <EventList
-              title={formatDate(new Date())}
-              events={getTodaysEvents()}
-              onEventSelect={onEventDetailsOpen}
-            />
-            <EventList
-              title={formatDate(getTomorrow())}
-              events={getTommorowsEvents()}
-              onEventSelect={onEventDetailsOpen}
-            />
-          </div>
-        </div>
-        <MainContent />
+  const header = (
+    <div className="flex items-center justify-between md:justify-end pr-2.5 pl-1 h-14 shrink-0 border-b border-black-18">
+      <div className="md:hidden">
+        <IconButton
+          iconName="schedule"
+          size={IconButtonSize.L}
+          active={isScheduleOpen}
+          onClick={onScheduleVisibilityToggle}
+        />
       </div>
+      {liveEvent && (
+        <Button disabled={!liveEvent} onClick={onEventJoin}>
+          {liveEvent.summary} at {convertToHourFormat(liveEvent.start)}
+        </Button>
+      )}
+    </div>
+  );
+  return (
+    <PageLayout header={header}>
+      <PageLayoutAside isVisible={isScheduleOpen}>
+        <Schedule
+          overdueEvents={overdueEvents}
+          todaysEvents={todaysEvents}
+          tommorowsEvents={tommorowsEvents}
+          onEventDetailsOpen={onEventDetailsOpen}
+        />
+      </PageLayoutAside>
+      <PageLayoutMain>
+        <MainContent />
+      </PageLayoutMain>
       <EventDetailsModal
-        isOpen={!!selectedEvent}
+        isOpen={isEventDetailsModalOpen}
         onClose={onEventDetailsClose}
         title={selectedEvent?.summary}
         start={selectedEvent?.start}
         end={selectedEvent?.end}
-        onJoin={function (): void {
-          throw new Error('Function not implemented.');
-        }}
+        onJoin={onEventJoin}
       />
-    </div>
+    </PageLayout>
   );
 };
 

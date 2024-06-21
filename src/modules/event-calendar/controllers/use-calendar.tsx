@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   eventsService,
   reviewsService,
@@ -9,6 +9,7 @@ import {
 } from '../api';
 import { EventType } from '../components';
 import { EventStatus, EventViewModel } from '../state';
+import { usePolling } from '../../core/utils';
 
 const getStatus = (startDate: Date, endDate: Date, state?: ReviewState) => {
   const now = new Date();
@@ -16,6 +17,8 @@ const getStatus = (startDate: Date, endDate: Date, state?: ReviewState) => {
     return EventStatus.Live;
   } else if (state && state !== ReviewState.Completed && now >= endDate) {
     return EventStatus.Overdue;
+  } else if (now >= endDate) {
+    return EventStatus.Passed;
   }
   return EventStatus.Default;
 };
@@ -32,19 +35,20 @@ const filterEvents = (events: EventViewModel[]) =>
       event.start.getDate() === new Date().getDate() + 1
   );
 
-const mapSchedule = (events: Event[], reviews: Review[]): EventViewModel[] => {
+const mapEvents = (events: Event[], reviews: Review[]): EventViewModel[] => {
   const mappedEvents = events.map(
     ({ id, summary, url, category, start, end }): EventViewModel => {
       const startDate = new Date(start);
       const endDate = new Date(end);
+      const type =
+        category === EventCategory.Meeting
+          ? EventType.Meeting
+          : EventType.Session;
       return {
-        id,
+        id: `${id}-${type}`,
         summary,
         url,
-        type:
-          category === EventCategory.Meeting
-            ? EventType.Meeting
-            : EventType.Session,
+        type,
         status: getStatus(startDate, endDate),
         start: startDate,
         end: endDate,
@@ -57,7 +61,7 @@ const mapSchedule = (events: Event[], reviews: Review[]): EventViewModel[] => {
       const startDate = new Date(start);
       const endDate = new Date(end);
       return {
-        id,
+        id: `${id}-${EventType.Correction}`,
         summary,
         url,
         type: EventType.Correction,
@@ -74,53 +78,88 @@ const mapSchedule = (events: Event[], reviews: Review[]): EventViewModel[] => {
   return sortedEvents;
 };
 
+const pollingIntervalInMs = 3000000;
+
 const useCalendarController = () => {
   const [isInitializing, setIsInitializing] = useState(true);
-  const [schedule, setSchedule] = useState<EventViewModel[]>([]);
-  const [selectedEventId, setSelectedEventId] = useState<number | undefined>(
+  const [isScheduleOpen, setIsScheduleOpen] = useState(true);
+  const [events, setEvents] = useState<EventViewModel[]>([]);
+  const [selectedEventId, setSelectedEventId] = useState<string | undefined>(
     undefined
   );
+  const [isEventDetailsModalOpen, setIsEventDetailsModalOpen] = useState(false);
+  const selectedEvent = events.find(({ id }) => id === selectedEventId);
 
-  console.log(selectedEventId);
+  const todaysEvents = useMemo(
+    () =>
+      events.filter(({ start }) => start.getDate() === new Date().getDate()),
+    [events]
+  );
 
-  const getEvents = async () => {
-    setIsInitializing(true);
-    const events = await eventsService.find();
-    const reviews = await reviewsService.find();
-    const mappedSchedule = mapSchedule(events, reviews);
-    setSchedule(mappedSchedule);
-    setIsInitializing(false);
-  };
+  const tommorowsEvents = useMemo(
+    () =>
+      events.filter(
+        ({ start }) => start.getDate() === new Date().getDate() + 1
+      ),
+    [events]
+  );
 
-  useEffect(() => {
-    getEvents();
+  const overdueEvents = useMemo(
+    () => events.filter(({ status }) => status === EventStatus.Overdue),
+    [events]
+  );
+
+  const liveEvent = todaysEvents.find(
+    ({ status }) => status === EventStatus.Live
+  );
+
+  const getEvents = useCallback(async () => {
+    try {
+      setIsInitializing(true);
+      const events = await eventsService.find();
+      const reviews = await reviewsService.find();
+      const mappedEvents = mapEvents(events, reviews);
+      setEvents(mappedEvents);
+    } catch {
+      // TODO: Error handling
+    } finally {
+      setIsInitializing(false);
+    }
   }, []);
 
-  const onEventDetailsClose = () => setSelectedEventId(undefined);
-  const onEventDetailsOpen = (id: number) => setSelectedEventId(id);
+  usePolling(getEvents, true, pollingIntervalInMs);
 
-  const getTodaysEvents = () =>
-    schedule.filter((event) => event.start.getDate() === new Date().getDate());
+  const onEventDetailsClose = useCallback(() => {
+    setIsEventDetailsModalOpen(false);
+  }, []);
 
-  const getTommorowsEvents = () =>
-    schedule.filter(
-      (event) => event.start.getDate() === new Date().getDate() + 1
-    );
+  const onEventDetailsOpen = useCallback((id: string) => {
+    setSelectedEventId(id);
+    setIsEventDetailsModalOpen(true);
+  }, []);
 
-  const getOverdueEvents = () =>
-    schedule.filter((event) => event.status === EventStatus.Overdue);
+  const onEventJoin = useCallback(() => {
+    alert(`Joining event ${liveEvent?.url}`);
+  }, [liveEvent?.url]);
 
-  const selectedEvent = schedule.find(({ id }) => id === selectedEventId);
+  const onScheduleVisibilityToggle = useCallback(() => {
+    setIsScheduleOpen((prev) => !prev);
+  }, []);
 
   return {
-    schedule,
+    events,
+    todaysEvents,
+    tommorowsEvents,
+    overdueEvents,
     selectedEvent,
+    liveEvent,
+    isEventDetailsModalOpen,
     isInitializing,
+    isScheduleOpen,
+    onScheduleVisibilityToggle,
     onEventDetailsOpen,
     onEventDetailsClose,
-    getTodaysEvents,
-    getTommorowsEvents,
-    getOverdueEvents,
+    onEventJoin,
   };
 };
 

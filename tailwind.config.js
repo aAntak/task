@@ -11,6 +11,10 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
     theme: {
+      screens: {
+        'md': '768px',
+        'lg': '992px'
+      },
       extend: {
         fontFamily: {
           roboto: ['Roboto', 'sans-serif'],
