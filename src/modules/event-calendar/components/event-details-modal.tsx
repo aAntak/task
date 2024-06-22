@@ -16,7 +16,6 @@ type EventDetailsModalProps = {
   end?: Date;
   url?: string;
   onClose: () => void;
-  onJoin: () => void;
 };
 
 const EventDetailsModal = ({
@@ -24,8 +23,8 @@ const EventDetailsModal = ({
   title,
   start,
   end,
+  url,
   onClose,
-  onJoin,
 }: EventDetailsModalProps) => {
   const formattedStartTime = start && convertToHourFormat(start);
   const formattedEndTime = end && convertToHourFormat(end);
@@ -39,8 +38,8 @@ const EventDetailsModal = ({
             {dateCategory} {formattedStartTime}-{formattedEndTime}
           </Text>
         </div>
-        {start && end && (
-          <EventDetailsModalFooter start={start} end={end} onJoin={onJoin} />
+        {start && end && url && (
+          <EventDetailsModalFooter start={start} end={end} url={url} />
         )}
       </div>
     </Modal>

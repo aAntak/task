@@ -4,6 +4,5 @@ https://turingcollege.notion.site/React-Frontend-Tech-Interview-Task-1f4c3956864
 https://mockapi.io/projects/66740dcb75872d0e0a94e1c1#
 
 // TODO:
-// 8. button as link, navigate to the open tab
 // 3. Review overdue event logic
 // 4. Considering refetching when modal timer expires

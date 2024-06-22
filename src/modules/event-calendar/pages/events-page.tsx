@@ -2,7 +2,7 @@ import {
   PageLayout,
   PageLayoutAside,
   PageLayoutMain,
-} from '../../core/components';
+} from 'modules/core/components';
 import {
   EventDetailsModal,
   MainContent,
@@ -23,7 +23,6 @@ const EventsPage = () => {
     isInitializing,
     onEventDetailsOpen,
     onEventDetailsClose,
-    onEventJoin,
     onScheduleVisibilityToggle,
   } = useEventsPageController();
 
@@ -32,7 +31,6 @@ const EventsPage = () => {
       isScheduleOpen={isScheduleOpen}
       liveEvent={liveEvent}
       onScheduleVisibilityToggle={onScheduleVisibilityToggle}
-      onEventJoin={onEventJoin}
     />
   );
 
@@ -56,7 +54,7 @@ const EventsPage = () => {
         title={selectedEvent?.summary}
         start={selectedEvent?.start}
         end={selectedEvent?.end}
-        onJoin={onEventJoin}
+        url={selectedEvent?.url}
       />
     </PageLayout>
   );

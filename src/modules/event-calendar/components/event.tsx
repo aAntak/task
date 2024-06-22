@@ -1,6 +1,6 @@
 import { Color } from 'modules/core/theme';
-import { Text, TextElementType, TextStyle } from '../../core/components';
-import { convertToHourFormat } from '../../core/utils';
+import { Text, TextElementType, TextStyle } from 'modules/core/components';
+import { convertToHourFormat } from 'modules/core/utils';
 import { EventStatus, EventType } from '../state';
 
 type EventProps = {

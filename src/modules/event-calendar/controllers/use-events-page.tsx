@@ -1,4 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
+import { usePolling } from 'modules/core/utils';
+import { ScreenSize, getMediaQuery } from 'modules/core/theme';
 import {
   eventsService,
   reviewsService,
@@ -9,8 +11,6 @@ import {
 } from '../api';
 import { EventType } from '../components';
 import { EventStatus, EventViewModel } from '../state';
-import { usePolling } from '../../core/utils';
-import { ScreenSize, getMediaQuery } from '../../core/theme';
 
 const getStatus = (startDate: Date, endDate: Date, state?: ReviewState) => {
   const now = new Date();
@@ -146,10 +146,6 @@ const useEventsPageController = () => {
     setIsEventDetailsModalOpen(true);
   }, []);
 
-  const onEventJoin = useCallback(() => {
-    alert(`Joining event ${liveEvent?.url}`);
-  }, [liveEvent?.url]);
-
   const onScheduleVisibilityToggle = useCallback(() => {
     setIsScheduleOpen((prev) => !prev);
   }, []);
@@ -167,7 +163,6 @@ const useEventsPageController = () => {
     onScheduleVisibilityToggle,
     onEventDetailsOpen,
     onEventDetailsClose,
-    onEventJoin,
   };
 };
 

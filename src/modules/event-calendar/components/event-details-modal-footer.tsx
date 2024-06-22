@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Text, TextStyle, Button } from 'modules/core/components';
+import { Text, TextStyle, Link, LinkTarget } from 'modules/core/components';
 import { getCountdownTime, getIsCurrentTimeBetween } from 'modules/core/utils';
 import { Color } from 'modules/core/theme';
 
 type EventDetailsModalFooterProps = {
   start: Date;
   end: Date;
-  onJoin: () => void;
+  url: string;
 };
 
 const getFormattedStartTime = (start: Date, end: Date): string => {
@@ -20,7 +20,7 @@ const getFormattedStartTime = (start: Date, end: Date): string => {
   }
 };
 
-const getIsJoinButtonDisabled = (start?: Date, timeDiff?: number | null) => {
+const getIsJoinLinkDisabled = (start?: Date, timeDiff?: number | null) => {
   const now = new Date();
   return !start || !timeDiff || (now < start && timeDiff > 15 * 60 * 1000);
 };
@@ -33,11 +33,11 @@ const getTimeDiff = (start: Date) => {
 const EventDetailsModalFooter = ({
   start,
   end,
-  onJoin,
+  url,
 }: EventDetailsModalFooterProps) => {
   const [timeDiff, setTimeDiff] = useState<number>(getTimeDiff(start));
   const formattedStartTime = getFormattedStartTime(start, end);
-  const isJoinButtonDisabled = getIsJoinButtonDisabled(start, timeDiff);
+  const isJoinLinkDisabled = getIsJoinLinkDisabled(start, timeDiff);
   const isEventActive =
     start && end ? getIsCurrentTimeBetween(start, end) : false;
   const isEventFinished = !start || !end || new Date() > end;
@@ -64,9 +64,14 @@ const EventDetailsModalFooter = ({
         {formattedStartTime}
       </Text>
       {!isEventFinished && (
-        <Button fullWidth disabled={isJoinButtonDisabled} onClick={onJoin}>
+        <Link
+          href={url}
+          target={LinkTarget.Blank}
+          fullWidth
+          disabled={isJoinLinkDisabled}
+        >
           Join meeting
-        </Button>
+        </Link>
       )}
     </div>
   );
