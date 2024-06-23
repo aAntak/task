@@ -1,8 +1,11 @@
-https://www.figma.com/design/ln1lruLGgf9FpY1HamHJco/Turing-College_technical-task?node-id=5-7462&t=sgZZbqhJdB51kc3r-0
-https://headlessui.com/react/button
-https://turingcollege.notion.site/React-Frontend-Tech-Interview-Task-1f4c3956864b4d7fbdd7d6313d522256
-https://mockapi.io/projects/66740dcb75872d0e0a94e1c1#
+### `npm install && npm start`
 
-// TODO:
-// 3. Review overdue event logic
-// 4. Considering refetching when modal timer expires
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+### `Deployed app`
+
+https://tech-task-turing-college.netlify.app/

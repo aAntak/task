@@ -37,15 +37,15 @@ const PageLayoutAside = ({
       leaveFrom="translate-x-0"
       leaveTo="-translate-x-full"
     >
-      <div className="absolute inset-0 flex flex-1 border-r border-black-18 md:max-w-[472px] md:static md:pt-6 md:items-start md:px-6 overflow-auto">
+      <aside className="absolute inset-0 flex flex-1 border-r border-black-18 md:max-w-[472px] md:static md:pt-6 md:items-start md:px-6 overflow-auto">
         {children}
-      </div>
+      </aside>
     </Transition>
   );
 };
 
 const PageLayoutMain = ({ children }: PropsWithChildren) => {
-  return <div className="flex flex-1 px-2 pt-6 md:px-6">{children}</div>;
+  return <main className="flex flex-1 px-2 pt-6 md:px-6">{children}</main>;
 };
 
 export { PageLayout, PageLayoutAside, PageLayoutMain };
