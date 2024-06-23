@@ -1,17 +1,19 @@
 import { useRef, useCallback, useEffect } from 'react';
 
+type PollingReturnTypes = {
+  refreshPolling: () => void;
+};
+
 const usePolling = (
   callback: () => void,
   condition: boolean,
-  interval = 3000
-): void => {
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  interval: number = 3000
+): PollingReturnTypes => {
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startPolling = useCallback(() => {
     callback();
-    intervalRef.current = setInterval(() => {
-      callback();
-    }, interval);
+    intervalRef.current = setInterval(callback, interval);
   }, [callback, interval]);
 
   const stopPolling = useCallback(() => {
@@ -19,7 +21,12 @@ const usePolling = (
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-  }, [intervalRef]);
+  }, []);
+
+  const refreshPolling = useCallback(() => {
+    stopPolling();
+    startPolling();
+  }, [stopPolling, startPolling]);
 
   useEffect(() => {
     if (condition) {
@@ -27,8 +34,10 @@ const usePolling = (
     } else {
       stopPolling();
     }
-    return () => stopPolling();
+    return stopPolling;
   }, [condition, startPolling, stopPolling]);
+
+  return { refreshPolling };
 };
 
 export { usePolling };

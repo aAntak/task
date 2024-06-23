@@ -11,6 +11,7 @@ import {
 } from '../api';
 import { EventType } from '../components';
 import { EventStatus, EventViewModel } from '../state';
+import { useEventStatusObserver } from './use-event-status-observer';
 
 const getStatus = (startDate: Date, endDate: Date, state?: ReviewState) => {
   const now = new Date();
@@ -83,7 +84,7 @@ const mapEvents = (events: Event[], reviews: Review[]): EventViewModel[] => {
   return sortedEvents;
 };
 
-const pollingIntervalInMs = 60000;
+const pollingIntervalInMs = 300000;
 
 const useEventsPageController = () => {
   const [isInitializing, setIsInitializing] = useState(true);
@@ -137,7 +138,9 @@ const useEventsPageController = () => {
     }
   }, []);
 
-  usePolling(getEvents, true, pollingIntervalInMs);
+  const { refreshPolling } = usePolling(getEvents, true, pollingIntervalInMs);
+
+  useEventStatusObserver(events, refreshPolling);
 
   const onEventDetailsClose = useCallback(() => {
     setIsEventDetailsModalOpen(false);
