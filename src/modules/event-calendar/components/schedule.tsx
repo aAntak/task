@@ -1,5 +1,4 @@
-import { Headline, HeadlineLevel } from 'modules/core/components';
-import { getShortDate, getTomorrow } from 'modules/core/utils';
+import { getShortDateString, getTomorrow } from 'modules/core/utils';
 import { EventStatus, EventViewModel } from '../state';
 import { EventList } from './event-list';
 
@@ -23,8 +22,8 @@ const Schedule = ({
   }
 
   return (
-    <div className="flex flex-col items-center grow gap-4 bg-black-15 rounded-t-md pt-6 px-2 overflow-auto">
-      <Headline as={HeadlineLevel.h2}>My schedule</Headline>
+    <div className="flex flex-col items-center grow gap-4 bg-black-15 rounded-md pt-6 px-2 pb-4 max-h-full overflow-auto">
+      <h2 className="text-headline-medium text-grey-92 pb-1">My schedule</h2>
       {overdueEvents?.length > 0 && (
         <EventList
           title={EventStatus.Overdue}
@@ -33,13 +32,13 @@ const Schedule = ({
         />
       )}
       <EventList
-        title={getShortDate(new Date())}
+        title={getShortDateString(new Date())}
         events={todaysEvents}
         onEventSelect={onEventDetailsOpen}
         emptyListText="No events for today. 🎉"
       />
       <EventList
-        title={getShortDate(getTomorrow())}
+        title={getShortDateString(getTomorrow())}
         events={tommorowsEvents}
         onEventSelect={onEventDetailsOpen}
         emptyListText="No events for tomorrow. 🎉"

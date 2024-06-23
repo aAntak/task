@@ -39,7 +39,7 @@ const getRelativeWeekday = (date: Date): string => {
   }
 };
 
-const getShortDate = (date: Date): string => {
+const getShortDateString = (date: Date): string => {
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
   const relativeDescriptor = getRelativeWeekday(date);
@@ -76,7 +76,17 @@ const getCountdownTime = (start: Date) => {
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-  return `Starts in: ${days}d ${hours}h ${minutes}min`;
+  let result = 'Starts in:';
+
+  if (days > 0) {
+    result += ` ${days}d`;
+  }
+  if (hours > 0) {
+    result += ` ${hours}h`;
+  }
+  result += ` ${minutes}min`;
+
+  return result.trim();
 };
 
 const convertToHourFormat = (datetime: Date) => {
@@ -93,7 +103,7 @@ const getIsCurrentTimeBetween = (start: Date, end: Date) => {
 
 export {
   getCountdownTime,
-  getShortDate,
+  getShortDateString,
   getDateCategory,
   getTomorrow,
   getIsCurrentTimeBetween,

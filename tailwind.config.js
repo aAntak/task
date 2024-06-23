@@ -1,11 +1,3 @@
-/** @type {import('tailwindcss').Config} */
-
-/* TODO: I kept color token names consistent as in figma but:
-  1. Figma has inconsistent color naming
-  2. I'd argue we should use semantic color naming (primary, secondary, danger, warning, etc.) 
-  --primitives--hover--purple: #5c33e7;
-*/
-
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -51,6 +43,7 @@ module.exports = {
         },
         colors: {
           grey: {
+            95: '#EAEAEB', // Was not in initial list of color tokens, but was added after inspecting designs.
             92: '#E0E0E1',  
             50: '#7A7C85',
           },
@@ -70,6 +63,9 @@ module.exports = {
           red: '#CA4365', 
         },
       },
+      boxShadow: {
+        'xl': '0 0 60px 0 rgba(0, 0, 0, 0.35)',
+      }
     },
   plugins: [],
 }

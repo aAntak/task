@@ -55,6 +55,7 @@ const EventsPage = () => {
         start={selectedEvent?.start}
         end={selectedEvent?.end}
         url={selectedEvent?.url}
+        status={selectedEvent?.status}
       />
     </PageLayout>
   );

@@ -14,12 +14,16 @@ import { EventStatus, EventViewModel } from '../state';
 
 const getStatus = (startDate: Date, endDate: Date, state?: ReviewState) => {
   const now = new Date();
+  const diff = startDate.getTime() - now.getTime();
+
   if (now >= startDate && now <= endDate) {
     return EventStatus.Live;
   } else if (state && state !== ReviewState.Completed && now >= endDate) {
     return EventStatus.Overdue;
   } else if (now >= endDate) {
     return EventStatus.Passed;
+  } else if (now < startDate && diff < 15 * 60 * 1000) {
+    return EventStatus.StartsSoon;
   }
   return EventStatus.Default;
 };
@@ -79,8 +83,7 @@ const mapEvents = (events: Event[], reviews: Review[]): EventViewModel[] => {
   return sortedEvents;
 };
 
-// TODO: set as 5 mins
-const pollingIntervalInMs = 3000000;
+const pollingIntervalInMs = 60000;
 
 const useEventsPageController = () => {
   const [isInitializing, setIsInitializing] = useState(true);
@@ -123,7 +126,6 @@ const useEventsPageController = () => {
 
   const getEvents = useCallback(async () => {
     try {
-      setIsInitializing(true);
       const events = await eventsService.find();
       const reviews = await reviewsService.find();
       const mappedEvents = mapEvents(events, reviews);

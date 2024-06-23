@@ -1,18 +1,12 @@
-import {
-  Headline,
-  HeadlineLevel,
-  Text,
-  TextStyle,
-} from 'modules/core/components';
 import { memo } from 'react';
 
 const MainContent = memo(() => (
   <div className="flex justify-center grow bg-black-15 rounded-t-md px-6 overflow-auto">
     <div className="flex flex-col gap-6 w-full max-w-[602px] mt-[72px]">
-      <Headline as={HeadlineLevel.h1}>
+      <h1 className="text-headline-large text-grey-92">
         The standard Lorem Ipsum passage, used since the 1500s
-      </Headline>
-      <Text textStyle={TextStyle.BodyText}>
+      </h1>
+      <p className="text-body text-grey-92">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -20,14 +14,14 @@ const MainContent = memo(() => (
         velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
         occaecat cupidatat non proident, sunt in culpa qui officia deserunt
         mollit anim id est laborum.
-      </Text>
-      <Text textStyle={TextStyle.BodyText}>
+      </p>
+      <p className="text-body text-grey-92">
         Sed ut perspiciatis unde omnis iste natus error sit voluptatem
         accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
         illo inventore veritatis et quasi architecto beatae vitae dicta sunt
         explicabo.
-      </Text>
-      <Text textStyle={TextStyle.BodyText}>
+      </p>
+      <p className="text-body text-grey-92">
         Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
         fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
         sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
@@ -38,7 +32,7 @@ const MainContent = memo(() => (
         autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
         nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
         voluptas nulla pariatur?
-      </Text>
+      </p>
     </div>
   </div>
 ));

@@ -6,6 +6,7 @@ enum EventType {
 
 enum EventStatus {
   Default = 'Default',
+  StartsSoon = 'StartsSoon',
   Live = 'Live',
   Overdue = 'Overdue',
   Passed = 'Passed',

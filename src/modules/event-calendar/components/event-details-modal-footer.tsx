@@ -1,74 +1,56 @@
-import { useState, useEffect } from 'react';
-import { Text, TextStyle, Link, LinkTarget } from 'modules/core/components';
-import { getCountdownTime, getIsCurrentTimeBetween } from 'modules/core/utils';
-import { Color } from 'modules/core/theme';
+import { Link, LinkTarget } from 'modules/core/components';
+import { getCountdownTime } from 'modules/core/utils';
+import { EventStatus } from '../state';
 
 type EventDetailsModalFooterProps = {
   start: Date;
-  end: Date;
   url: string;
+  status: EventStatus;
 };
 
-const getFormattedStartTime = (start: Date, end: Date): string => {
-  const now = new Date();
-  if (now < start) {
-    return getCountdownTime(new Date(start));
-  } else if (now >= start && now <= end) {
+const getFormattedStartTime = (status: EventStatus, start: Date): string => {
+  if (status === EventStatus.Live) {
     return 'Event is happening! Quick, join, join, join!';
-  } else {
+  } else if (status === EventStatus.Overdue || status === EventStatus.Passed) {
     return 'Event already happened';
   }
+  return getCountdownTime(new Date(start));
 };
 
-const getIsJoinLinkDisabled = (start?: Date, timeDiff?: number | null) => {
-  const now = new Date();
-  return !start || !timeDiff || (now < start && timeDiff > 15 * 60 * 1000);
-};
-
-const getTimeDiff = (start: Date) => {
-  const now = new Date();
-  return start.getTime() - now.getTime();
+const joinLinkStateMap: Record<
+  EventStatus,
+  { visible: boolean; disabled?: boolean }
+> = {
+  [EventStatus.Default]: { visible: true, disabled: true },
+  [EventStatus.Live]: { visible: true, disabled: false },
+  [EventStatus.Overdue]: { visible: false },
+  [EventStatus.Passed]: { visible: false },
+  [EventStatus.StartsSoon]: { visible: true, disabled: false },
 };
 
 const EventDetailsModalFooter = ({
   start,
-  end,
   url,
+  status,
 }: EventDetailsModalFooterProps) => {
-  const [timeDiff, setTimeDiff] = useState<number>(getTimeDiff(start));
-  const formattedStartTime = getFormattedStartTime(start, end);
-  const isJoinLinkDisabled = getIsJoinLinkDisabled(start, timeDiff);
-  const isEventActive =
-    start && end ? getIsCurrentTimeBetween(start, end) : false;
-  const isEventFinished = !start || !end || new Date() > end;
-
-  useEffect(() => {
-    if (isEventFinished || !start || !end) return;
-
-    const updateTimeDiff = () => {
-      const diff = getTimeDiff(start);
-      setTimeDiff(diff);
-    };
-
-    const intervalId = setInterval(updateTimeDiff, 1000);
-
-    return () => clearInterval(intervalId);
-  }, [isEventFinished, start, end]);
+  const formattedStartTime = getFormattedStartTime(status, start);
+  const joinLinkState = joinLinkStateMap[status];
 
   return (
-    <div>
-      <Text
-        textStyle={TextStyle.Subtitle}
-        color={isEventActive ? Color.Yellow1 : Color.Grey50}
+    <div className="flex flex-col gap-2.5">
+      <p
+        className={`text-subtitle ${
+          status === EventStatus.Live ? 'text-yellow-1' : 'text-grey-50'
+        }`}
       >
         {formattedStartTime}
-      </Text>
-      {!isEventFinished && (
+      </p>
+      {joinLinkState.visible && (
         <Link
           href={url}
           target={LinkTarget.Blank}
           fullWidth
-          disabled={isJoinLinkDisabled}
+          disabled={joinLinkState.disabled}
         >
           Join meeting
         </Link>

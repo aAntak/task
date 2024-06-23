@@ -1,7 +1,5 @@
-import { TextStyle, Text } from 'modules/core/components';
 import { Event } from './event';
 import { EventViewModel } from '../state';
-import { Color } from 'modules/core/theme';
 
 type EventListProps = {
   title: string;
@@ -17,13 +15,11 @@ const EventList = ({
   onEventSelect,
 }: EventListProps) => (
   <div className="flex flex-col w-full">
-    <Text textStyle={TextStyle.SubtitleMedium} color={Color.Grey50}>
-      {title}
-    </Text>
+    <p className="text-subtitle-medium text-grey-50">{title}</p>
     {!events.length ? (
-      <div className="flex items-center justify-center p-3">
-        <Text textStyle={TextStyle.Subtitle}>{emptyListText}</Text>
-      </div>
+      <p className="flex items-center justify-center p-3 text-subtitle text-white">
+        {emptyListText}
+      </p>
     ) : (
       <div className="flex flex-col gap-1">
         {events.map(({ id, summary, start, end, type, status }) => (

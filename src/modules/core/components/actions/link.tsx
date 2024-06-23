@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react';
-import { Text, TextElementType, TextStyle } from '../typography';
 
 enum LinkTarget {
   Blank = '_blank',
@@ -34,9 +33,7 @@ const Link = ({
         disabled ? 'opacity-40 pointer-events-none' : ''
       } ${fullWidth ? 'w-full' : ''}`}
     >
-      <Text as={TextElementType.span} textStyle={TextStyle.SubtitleMedium}>
-        {children}
-      </Text>
+      <span className="text-subtitle-medium text-grey-95">{children}</span>
     </a>
   );
 };

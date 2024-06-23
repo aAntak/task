@@ -1,13 +1,7 @@
-import { Color } from 'modules/core/theme';
-import {
-  Headline,
-  HeadlineLevel,
-  Modal,
-  TextStyle,
-  Text,
-} from 'modules/core/components';
+import { Modal } from 'modules/core/components';
 import { EventDetailsModalFooter } from './event-details-modal-footer';
 import { convertToHourFormat, getDateCategory } from 'modules/core/utils';
+import { EventStatus } from '../state';
 
 type EventDetailsModalProps = {
   isOpen: boolean;
@@ -16,6 +10,7 @@ type EventDetailsModalProps = {
   end?: Date;
   url?: string;
   onClose: () => void;
+  status?: EventStatus;
 };
 
 const EventDetailsModal = ({
@@ -24,6 +19,7 @@ const EventDetailsModal = ({
   start,
   end,
   url,
+  status,
   onClose,
 }: EventDetailsModalProps) => {
   const formattedStartTime = start && convertToHourFormat(start);
@@ -33,13 +29,13 @@ const EventDetailsModal = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex gap-y-10 flex-col">
         <div>
-          <Headline as={HeadlineLevel.h2}>{title}</Headline>
-          <Text textStyle={TextStyle.BodyText} color={Color.Grey50}>
+          <h2 className="text-headline-medium text-grey-95 pb-1">{title}</h2>
+          <p className="text-body text-grey-50">
             {dateCategory} {formattedStartTime}-{formattedEndTime}
-          </Text>
+          </p>
         </div>
-        {start && end && url && (
-          <EventDetailsModalFooter start={start} end={end} url={url} />
+        {start && end && url && status && (
+          <EventDetailsModalFooter start={start} url={url} status={status} />
         )}
       </div>
     </Modal>
