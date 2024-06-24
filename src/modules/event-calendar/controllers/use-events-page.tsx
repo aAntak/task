@@ -84,7 +84,7 @@ const mapEvents = (events: Event[], reviews: Review[]): EventViewModel[] => {
   return sortedEvents;
 };
 
-const pollingIntervalInMs = 300000;
+const pollingIntervalInMs = 60000;
 
 const useEventsPageController = () => {
   const [isInitializing, setIsInitializing] = useState(true);
