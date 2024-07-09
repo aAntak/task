@@ -7,6 +7,7 @@ import {
 } from 'modules/core/components';
 import { convertToHourFormat } from 'modules/core/utils';
 import { EventViewModel } from '../state';
+import { memo } from 'react';
 
 type EventsPageHeaderProps = {
   isScheduleOpen: boolean;
@@ -14,30 +15,32 @@ type EventsPageHeaderProps = {
   onScheduleVisibilityToggle: () => void;
 };
 
-const EventsPageHeader = ({
-  liveEvent,
-  isScheduleOpen,
-  onScheduleVisibilityToggle,
-}: EventsPageHeaderProps) => (
-  <Header
-    leftContent={
-      <div className="md:hidden">
-        <IconButton
-          iconName="schedule"
-          size={IconButtonSize.L}
-          active={isScheduleOpen}
-          onClick={onScheduleVisibilityToggle}
-        />
-      </div>
-    }
-    rightContent={
-      liveEvent && (
-        <Link href={liveEvent.url} target={LinkTarget.Blank}>
-          {liveEvent.summary} at {convertToHourFormat(liveEvent.start)}
-        </Link>
-      )
-    }
-  />
+const EventsPageHeader = memo(
+  ({
+    liveEvent,
+    isScheduleOpen,
+    onScheduleVisibilityToggle,
+  }: EventsPageHeaderProps) => (
+    <Header
+      leftContent={
+        <div className="md:hidden">
+          <IconButton
+            iconName="schedule"
+            size={IconButtonSize.L}
+            active={isScheduleOpen}
+            onClick={onScheduleVisibilityToggle}
+          />
+        </div>
+      }
+      rightContent={
+        liveEvent && (
+          <Link href={liveEvent.url} target={LinkTarget.Blank}>
+            {liveEvent.summary} at {convertToHourFormat(liveEvent.start)}
+          </Link>
+        )
+      }
+    />
+  )
 );
 
 export { EventsPageHeader };
